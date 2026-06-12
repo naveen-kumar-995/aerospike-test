@@ -1,0 +1,6 @@
+com\pinx\messaging\DlrCompositeKeyEngineApp.class
+com\pinx\messaging\AerospikeAsyncLoadTester$2.class
+com\pinx\messaging\AerospikeAsyncLoadTester$1.class
+com\pinx\messaging\AerospikeSyncLoadTester$Mode.class
+com\pinx\messaging\AerospikeAsyncLoadTester.class
+com\pinx\messaging\AerospikeSyncLoadTester.class

@@ -1,0 +1,75 @@
+version: "3.8"
+
+services:
+
+  aerospike-load-tester:
+
+    container_name: aerospike-load-tester
+
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    restart: "no"
+
+    environment:
+
+      TZ: "Asia/Kolkata"
+     
+      # Aerospike Connection
+      AEROSPIKE_HOST: "10.10.2.44"
+      AEROSPIKE_PORT: "3000"
+
+      AEROSPIKE_NAMESPACE: "deliveries"
+      AEROSPIKE_SET: "dlr_success"
+
+      # Load Test Mode
+      MODE: "MIXED"
+
+     
+      # Virtual Threads
+      INSERT_THREADS: "1000"
+      READ_THREADS: "1000"
+
+     
+      # Connection Pool
+      MAX_CONNS_PER_NODE: "2500"
+
+     
+      # Record Configuration
+      TTL_SECONDS: "172800"
+
+     
+      # Key File
+      KEY_FILE: "/logs/keys.txt"
+
+     
+      # Monitoring
+      MONITOR_INTERVAL_SEC: "1"
+
+     
+      # JVM Tuning
+      JAVA_TOOL_OPTIONS: >-
+        -Xms2g
+        -Xmx2g
+        -XX:+UseG1GC
+        -XX:+AlwaysPreTouch
+        -XX:MaxGCPauseMillis=200
+        -XX:+HeapDumpOnOutOfMemoryError
+        -XX:HeapDumpPath=/logs
+
+    volumes:
+      - ./logs:/logs
+
+    networks:
+      - aerospike-test-net
+
+    deploy:
+      resources:
+        limits:
+          cpus: "4"
+          memory: 4G
+
+networks:
+  aerospike-test-net:
+    driver: bridge
